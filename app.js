@@ -159,7 +159,7 @@ $(document).ready(function() {
 
     //load panels
     $.ajax({ //get data 
-        url: "data.json",
+        url: "https://raw.githubusercontent.com/dsills22/map/master/data.json", // !-- SWITCH BACK TO JUST data.json 
         dataType: "json",
         success: function(data) {
             var toolList = [];
