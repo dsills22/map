@@ -193,6 +193,8 @@ $(document).ready(function() {
                                 "</div>").dialog({
                                 title: obj.sectionName + " Tool List",
                                 modal: true,
+                                show: "fade",
+                                hide: "drop",
                                 positon: {my: "center", at: "center", of: "window"},
                                 open: function(event, ui) { 
                                     $('.ui-widget-overlay').bind('click', function() { 

@@ -33,7 +33,7 @@ li, span, div, input, button, label {
 }
 
 .section {
-    border: 1px black solid;
+    border: 1px solid rgba(136, 136, 136, 0.6);
     border-radius: 10px;
     text-align: center;
     display: flex;
@@ -68,7 +68,7 @@ li.summaryItem:nth-child(1) { /* first child of list is bold and underlined (Ope
 
 #toolSearch {
     border-radius: 10px;
-    border: 1px black solid;
+    border: 1px solid rgba(136, 136, 136, 0.6);
     width: 30%;
     height: 3.5%;
 }
