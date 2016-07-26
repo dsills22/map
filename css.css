@@ -1,0 +1,78 @@
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: rgba(200,200,200, .6);
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: rgba(156, 156, 156, .6);
+}
+
+li, span, div, input, button, label {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 200;
+    font-size: 12px;
+    font-size: 1.5vw; /* font size 1.5 times the view width / 100, fonts scale with view size */
+}
+
+.toolList {
+    max-height: 50vh !important;
+    overflow-y: auto !important;
+}
+
+.toolListItem {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.section {
+    border: 1px black solid;
+    border-radius: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center; /* align vertical */
+    position: absolute;
+}
+
+ul.summary {
+    padding-left: 10px;
+    text-align: justify;
+    list-style: none;
+}
+
+li.summaryItem:nth-child(1) { /* first child of list is bold and underlined (Open Area:) */
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.open-area {
+    margin-top: -70%;
+}
+
+#searchContainer {
+    padding-top: 5px;
+    padding-left: 10px;
+}
+
+.search-match {
+    background-color: rgba(47, 184, 14, 0.75);
+}
+
+#toolSearch {
+    border-radius: 10px;
+    border: 1px black solid;
+    width: 30%;
+    height: 3.5%;
+}
+
+.autocomplete-suggestions {
+    opacity: 0.75;
+}
