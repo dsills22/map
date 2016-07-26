@@ -20,6 +20,11 @@ li, span, div, input, button, label {
     font-size: 1.5vw; /* font size 1.5 times the view width / 100, fonts scale with view size */
 }
 
+.ui-dialog {
+    width: auto !important;
+    max-width: 85vw;
+}
+
 .toolList {
     max-height: 50vh !important;
     overflow-y: auto !important;
@@ -30,6 +35,7 @@ li, span, div, input, button, label {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-size: 12px;
 }
 
 .section {
@@ -76,3 +82,38 @@ li.summaryItem:nth-child(1) { /* first child of list is bold and underlined (Ope
 .autocomplete-suggestions {
     opacity: 0.75;
 }
+
+.youAreHere {
+    height: 11vh;
+    position: absolute;
+    top: 86%;
+    left: 71%;
+}
+
+.libraryCloseTime {
+    position: absolute;
+    top: 15px;
+    left: 60%;
+    display: flex;
+    align-items: center;
+}
+
+.libraryCloseTimeImg {
+    height: 20px;
+    width: 20px;
+}
+
+#timeText {
+    font-size: 1.2vw !important;
+}
+
+.help {
+    width: 16px;
+    height: 16px;
+}
+
+.helpContent {
+    max-width: 50vh;
+    font-size: 16px;
+}
+

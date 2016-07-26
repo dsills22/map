@@ -37,7 +37,7 @@ var CONST = {
     },
     frontDeskPanel: {
         w: 25,
-        h: 12,
+        h: 14,
         x: 44,
         y: 78
     }
@@ -71,6 +71,52 @@ var toolSortF = function(a, b) { //sort tools by name (case insensitive)
         return 1;
     } else {
         return 0;
+    }
+}
+
+var timeText = function() {
+	var openDays = [2,5,6];
+	var openHours = [17,18,19];
+	var lastOpenHour = openHours.slice(-1)[0];
+
+	var closeDate = new Date();
+	closeDate.setMinutes(0);
+	closeDate.setHours(lastOpenHour);
+	
+	var date = new Date();
+	var dow = date.getDay();
+	var hour = date.getHours();
+	var min = date.getMinutes();
+
+	var min2Close = Math.round(((date - closeDate % 86400000) % 3600000) / 60000);
+	
+	var closedText = "Library Hours are Tues/Thurs/Sat 5PM to 7PM"; 
+	var openText = "Library Closes in {{X}} Minutes"; 
+	
+	if(openDays.indexOf(dow) > -1) {
+		if(openHours.slice(0, -1).indexOf(hour) > -1) {
+			return openText.replace("{{X}}", min2Close); 
+		} else {
+			if(hour==lastOpenHour && min==0) {
+				return openText.replace("{{X}}", 0); 
+			} else {
+				return closedText; 
+			}
+		}
+	} else {
+		return closedText; 
+	}
+}
+
+var setTimeText = function() {
+	$("#timeText").text(timeText());
+}
+
+var makeOpenF = function(divModal) {
+	return function(event, ui) { 
+        $('.ui-widget-overlay').bind('click', function() { 
+            divModal.dialog('close'); 
+        }); 
     }
 }
 
@@ -185,23 +231,29 @@ $(document).ready(function() {
                     div.addClass("section");
                     div.attr("id", sectionId);
                     
+                    var modalOptions = {
+                    	modal: true,
+                        show: "fade",
+                        hide: "drop",
+                        positon: {my: "center", at: "center", of: "window"}
+                    };
                     if(obj.tools) { //if there are tools in this section, register a modal tool list when a section is tapped 
                         div.click(function() {
                             var divModal = $(
                                 "<div class='toolList'>" + 
                                     "<ul>" + toolListHtml + "</ul>" + 
-                                "</div>").dialog({
-                                title: obj.sectionName + " Tool List",
-                                modal: true,
-                                show: "fade",
-                                hide: "drop",
-                                positon: {my: "center", at: "center", of: "window"},
-                                open: function(event, ui) { 
-                                    $('.ui-widget-overlay').bind('click', function() { 
-                                        divModal.dialog('close'); 
-                                    }); 
-                                }
-                             });
+                                "</div>");
+                            divModal.dialog($.extend({}, modalOptions, {title: obj.sectionName + " Tool List", open: makeOpenF(divModal)}));
+                        });
+                    } else if(obj.frontDeskPanel) {
+                    	div.click(function() {
+                            var divModal = $(
+                                "<div class='helpContent'>" + 
+                                    "Welcome to the Tool Finder!<p/>Start typing in the search box located in the upper-left corner " + 
+                                    "to find tools. As you type, sections will highlight green, indicating a tool's location. Also, click " +
+                                    "any section to view a full list of its tools.<p/>Enjoy!" + 
+                                "</div>");
+                            divModal.dialog($.extend({}, modalOptions, {title: "Help", open: makeOpenF(divModal)}));
                         });
                     }
 
@@ -211,8 +263,16 @@ $(document).ready(function() {
                     span.addClass("section-name");
                     if(obj.openAreaPanel) {
                         span.addClass("open-area");
+                    } else if(obj.frontDeskPanel) {
+                    	span.css({"display": "inline-block", "padding-top": "20px", "padding-bottom": "5px"});
                     }
                     div.append(span);
+
+                    if(obj.frontDeskPanel) { //add help icon to the front desk secton 
+                    	div.css("display", "block");
+                    	var helpBtn = $("<br/><img src='help.png' alt='help' class='help'></img><p>");
+                    	div.append(helpBtn);
+                    }
 
                     if(obj.summary) { //if section has a list / summary of tool categories (Open Area has this)
                         var summary = $("<ul class='summary'></ul>"); //create list of summary items to display along with the section name 
@@ -227,6 +287,10 @@ $(document).ready(function() {
                     body.append(div); //add section to body 
                 }
             });
+			
+			body.append($("<img src='screw-pin.png' alt='you are here' class='youAreHere'></img>")); //you are here 
+			body.append($("<span class='libraryCloseTime'><img src='time.png' alt='library close time' class='libraryCloseTimeImg'></img>&nbsp;<span id='timeText'></span></span>")); //library close time
+			setTimeText();
 
             //setup auto-complete
             var autocomplete = new autoComplete({
@@ -257,5 +321,7 @@ $(document).ready(function() {
                 }
             });
         }
-    })
+    }); 
+
+	setInterval(setTimeText, 5000);
 });
