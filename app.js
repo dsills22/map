@@ -120,10 +120,29 @@ var makeOpenF = function(divModal) {
     }
 }
 
+var helpContent = 
+	"<div class='helpContent'>" + 
+		"Welcome to the Tool Finder!<p/>Start typing in the search box located in the upper-left corner " + 
+		"to find tools. As you type, sections will highlight green, indicating a tool's location. Also, click " +
+		"any section to view a full list of its tools.<p/>Enjoy!" + 
+	"</div>";
+
+var modalOptions = {
+	modal: true,
+    show: "fade",
+    hide: "drop",
+    positon: {my: "center", at: "center", of: "window"}
+};
+
 $(document).ready(function() {
     var body = $(document.body);
     var tool2SectionIdHash = {};
     var toolSearch =  $("#toolSearch");
+
+	$(".help").click(function() {
+        var divModal = $(helpContent);
+        divModal.dialog($.extend({}, modalOptions, {title: "Help", open: makeOpenF(divModal)}));
+    });
 
     document.addEventListener("touchstart", dismissKeyboardListener); //dismiss keyboard on click/tap outside of it
     document.addEventListener("mousedown", dismissKeyboardListener); //dismiss keyboard on click/tap outside of it
@@ -231,12 +250,6 @@ $(document).ready(function() {
                     div.addClass("section");
                     div.attr("id", sectionId);
                     
-                    var modalOptions = {
-                    	modal: true,
-                        show: "fade",
-                        hide: "drop",
-                        positon: {my: "center", at: "center", of: "window"}
-                    };
                     if(obj.tools) { //if there are tools in this section, register a modal tool list when a section is tapped 
                         div.click(function() {
                             var divModal = $(
@@ -245,14 +258,9 @@ $(document).ready(function() {
                                 "</div>");
                             divModal.dialog($.extend({}, modalOptions, {title: obj.sectionName + " Tool List", open: makeOpenF(divModal)}));
                         });
-                    } else if(obj.frontDeskPanel) {
+                    } else if(obj.frontDeskPanel) { //register help content on Help Desk section 
                     	div.click(function() {
-                            var divModal = $(
-                                "<div class='helpContent'>" + 
-                                    "Welcome to the Tool Finder!<p/>Start typing in the search box located in the upper-left corner " + 
-                                    "to find tools. As you type, sections will highlight green, indicating a tool's location. Also, click " +
-                                    "any section to view a full list of its tools.<p/>Enjoy!" + 
-                                "</div>");
+                            var divModal = $(helpContent);
                             divModal.dialog($.extend({}, modalOptions, {title: "Help", open: makeOpenF(divModal)}));
                         });
                     }
@@ -263,16 +271,8 @@ $(document).ready(function() {
                     span.addClass("section-name");
                     if(obj.openAreaPanel) {
                         span.addClass("open-area");
-                    } else if(obj.frontDeskPanel) {
-                    	span.css({"display": "inline-block", "padding-top": "20px", "padding-bottom": "5px"});
                     }
                     div.append(span);
-
-                    if(obj.frontDeskPanel) { //add help icon to the front desk secton 
-                    	div.css("display", "block");
-                    	var helpBtn = $("<br/><img src='help.png' alt='help' class='help'></img><p>");
-                    	div.append(helpBtn);
-                    }
 
                     if(obj.summary) { //if section has a list / summary of tool categories (Open Area has this)
                         var summary = $("<ul class='summary'></ul>"); //create list of summary items to display along with the section name 

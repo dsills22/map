@@ -108,8 +108,11 @@ li.summaryItem:nth-child(1) { /* first child of list is bold and underlined (Ope
 }
 
 .help {
-    width: 16px;
-    height: 16px;
+    position: absolute;
+    top: 15px;
+    left: calc(98% - 20px);
+    width: 20px;
+    height: 20px;
 }
 
 .helpContent {
