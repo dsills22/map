@@ -109,12 +109,18 @@ li.summaryItem:nth-child(1) { /* first child of list is bold and underlined (Ope
 
 .help {
     position: absolute;
-    top: 15px;
+    top: 13px;
     left: calc(98% - 20px);
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
 }
-
+.reset {
+    position: absolute;
+    top: 10px;
+    left: calc(40% - 20px);
+    width: 35px;
+    height: 35px;
+}
 .helpContent {
     max-width: 50vh;
     font-size: 16px;

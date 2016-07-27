@@ -142,7 +142,12 @@ $(document).ready(function() {
 	$(".help").click(function() {
         var divModal = $(helpContent);
         divModal.dialog($.extend({}, modalOptions, {title: "Help", open: makeOpenF(divModal)}));
-    });
+	});
+
+	$(".reset").click(function () {
+	    $("#toolSearch").val("");
+	    body.find(".section").removeClass("search-match");
+	});
 
     document.addEventListener("touchstart", dismissKeyboardListener); //dismiss keyboard on click/tap outside of it
     document.addEventListener("mousedown", dismissKeyboardListener); //dismiss keyboard on click/tap outside of it
